@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
     public function showLogin()
     {
         return view('users.login', []);
@@ -48,5 +43,12 @@ class UserController extends Controller
                     ->withErrors(['email' => 'Invalid email or password']);
 			}
 		}
+    }
+    
+    public function logout()
+    {
+        Auth::logout();
+
+        return Redirect::to('/');
     }
 }

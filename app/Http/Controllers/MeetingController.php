@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Redirect;
 class MeetingController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $upcoming = Meeting::where('date', '>=', Carbon::now())
