@@ -25,7 +25,7 @@ class UserController extends Controller
     {
 
 		$rules = array(
-            'email'    => 'required|email',
+            'email' => 'required|email',
             'password' => 'required|min:3'
         );
 
