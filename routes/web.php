@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
 });
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/', function() { return view('welcome'); });
+    Route::get('/', function() { return redirect('/login'); });
 
     Route::get('/login', ['as' => 'login', 'uses' => 'UserController@showLogin']);
     Route::post('/login', 'UserController@doLogin');

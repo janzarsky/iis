@@ -1,29 +1,28 @@
-<html>
-    <body>
-        <h1>IIS</h1>
-        <h2>Create meeting</h2>
+@extends('main')
 
-        {{ Form::open(['url' => 'meetings/create']) }}
+@section('title', 'Create meeting')
 
-        <p>
-            {{ Form::label('location', 'Location') }}
-            {{ Form::text('location') }}
-        </p>
+@section('content')
+{{ Form::open(['url' => 'meetings/create']) }}
 
-        <p>
-            {{ Form::label('date', 'Date') }}
-            {{ Form::text('date') }}
-        </p>
+<p>
+    {{ Form::label('location', 'Location') }}
+    {{ Form::text('location') }}
+</p>
 
-        <p>
-            {{ Form::label('with', 'With') }}
-            {{ Form::select('with', $available_users) }}
-        </p>
+<p>
+    {{ Form::label('date', 'Date') }}
+    {{ Form::text('date') }}
+</p>
 
-        <p>
-            {{ Form::submit('Submit!') }}
-        </p>
+<p>
+    {{ Form::label('with', 'With') }}
+    {{ Form::select('with', $available_users) }}
+</p>
 
-        {{ Form::close() }}
-    </body>
-</html>
+<p>
+    {{ Form::submit('Submit!') }}
+</p>
+
+{{ Form::close() }}
+@endsection

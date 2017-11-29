@@ -1,14 +1,9 @@
-<!doctype html>
-<html>
-<head>
-<title>IIS: Login</title>
-</head>
-<body>
+@extends('main')
 
+@section('title', 'Login')
+
+@section('content')
 {{ Form::open(array('url' => 'login')) }}
-<h1>Login</h1>
-
-<!-- if there are login errors, show them here -->
 <p>
     {{ $errors->first('email') }}
     {{ $errors->first('password') }}
@@ -26,3 +21,4 @@
 
 <p>{{ Form::submit('Submit!') }}</p>
 {{ Form::close() }}
+@endsection
