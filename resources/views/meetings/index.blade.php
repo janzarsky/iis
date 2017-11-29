@@ -3,10 +3,18 @@
         <h1>IIS</h1>
         <h2>Meetings</h2>
         <h3>Invites</h3>
-        {{ json_encode($invites, JSON_PRETTY_PRINT) }}
+            @foreach ($invites as $m) {
+                {{ json_encode($m, JSON_PRETTY_PRINT) }}
+                <a href="{{ route('meetings.accept', ['id' => $m->id]) }}">Accept meeting</a>
+                </br>
+            @endforeach
         <h3>Upcoming</h3>
-        {{ json_encode($upcoming, JSON_PRETTY_PRINT) }}
+            @foreach ($upcoming as $m) {
+                {{ json_encode($m, JSON_PRETTY_PRINT) }}</br>
+            @endforeach
         <h3>Past</h3>
-        {{ json_encode($past, JSON_PRETTY_PRINT) }}
+            @foreach ($past as $m) {
+                {{ json_encode($m, JSON_PRETTY_PRINT) }}</br>
+            @endforeach
     </body>
 </html>

@@ -15,7 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/meetings', 'MeetingController@index');
+Route::get('/meetings', ['as' => 'meetings',
+    'uses' => 'MeetingController@index']);
+Route::get('/meetings/accept/{id}', ['as' => 'meetings.accept',
+    'uses' => 'MeetingController@accept']);
 
 Route::get('/login', ['as' => 'login', 'uses' => 'UserController@showLogin']);
 Route::post('/login', 'UserController@doLogin');

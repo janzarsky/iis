@@ -6,6 +6,7 @@ use App\User;
 use App\Meeting;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Redirect;
 
 class MeetingController extends Controller
 {
@@ -29,5 +30,14 @@ class MeetingController extends Controller
 
         return view('meetings.index', ['upcoming' => $upcoming, 'past' => $past,
             'invites' => $invites]);
+    }
+
+    public function accept($id)
+    {
+        $meeting = Meeting::find($id);
+        $meeting->confirmed = true;
+        $meeting->update();
+
+        return Redirect::route('meetings');
     }
 }
