@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Meeting;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class MeetingController extends Controller
 {
@@ -16,8 +17,17 @@ class MeetingController extends Controller
 
     public function index()
     {
-        $meetings = Meeting::all();
+        $upcoming = Meeting::where('date', '>=', Carbon::now())
+            ->where('confirmed', true)
+            ->get();
 
-        return view('meetings.index', ['meetings' => $meetings]);
+        $past = Meeting::where('date', '<', Carbon::now())
+            ->where('confirmed', true)
+            ->get();
+
+        $invites = Meeting::where('confirmed', false)->get();
+
+        return view('meetings.index', ['upcoming' => $upcoming, 'past' => $past,
+            'invites' => $invites]);
     }
 }

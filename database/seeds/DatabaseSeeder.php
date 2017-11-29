@@ -39,11 +39,28 @@ class DatabaseSeeder extends Seeder
 
         // Meetings
         DB::table('meetings')->insert([
+            'user_id' => 1,
             'alcoholic_id' => 1,
             'patron_id' => 1,
             'date' => '2017-11-27',
             'location' => 'Some cafe',
-            'patron_ack' => true,
+            'confirmed' => false,
+        ]);
+        DB::table('meetings')->insert([
+            'user_id' => 1,
+            'alcoholic_id' => 1,
+            'patron_id' => 1,
+            'date' => '2017-11-23',
+            'location' => 'Some cafe',
+            'confirmed' => true,
+        ]);
+        DB::table('meetings')->insert([
+            'user_id' => 1,
+            'alcoholic_id' => 1,
+            'patron_id' => 1,
+            'date' => '2018-11-27',
+            'location' => 'Some cafe',
+            'confirmed' => true,
         ]);
 
     }

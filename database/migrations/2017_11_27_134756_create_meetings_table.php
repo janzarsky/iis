@@ -15,12 +15,12 @@ class CreateMeetingsTable extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->integer('alcoholic_id');
             $table->integer('patron_id');
             $table->date('date');
             $table->string('location', 200);
-            $table->boolean('aloholic_ack')->default(false);
-            $table->boolean('patron_ack')->default(false);
+            $table->boolean('confirmed')->default(false);
             $table->timestamps();
 
             // TODO
