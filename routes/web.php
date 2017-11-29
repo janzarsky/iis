@@ -24,6 +24,8 @@ Route::get('/meetings/accept/{id}', ['as' => 'meetings.accept',
     'uses' => 'MeetingController@accept']);
 Route::get('/meetings/detail/{id}', ['as' => 'meetings.detail',
     'uses' => 'MeetingController@detail']);
+Route::get('/meetings/delete/{id}', ['as' => 'meetings.delete',
+    'uses' => 'MeetingController@delete']);
 
 Route::get('/login', ['as' => 'login', 'uses' => 'UserController@showLogin']);
 Route::post('/login', 'UserController@doLogin');

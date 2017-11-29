@@ -50,6 +50,14 @@ class MeetingController extends Controller
         return view('meetings.detail', ['meeting' => $meeting]);
     }
 
+    public function delete($id)
+    {
+        $meeting = Meeting::find($id);
+        $meeting->delete();
+
+        return Redirect::route('meetings');
+    }
+
     public function create()
     {
         return view('meetings.create');
