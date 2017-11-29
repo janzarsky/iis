@@ -15,23 +15,12 @@ class CreateMeetingsTable extends Migration
     {
         Schema::create('meetings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('alcoholic_id');
-            $table->integer('patron_id');
+            $table->integer('user1_id');
+            $table->integer('user2_id');
             $table->date('date');
             $table->string('location', 200);
             $table->boolean('confirmed')->default(false);
             $table->timestamps();
-
-            // TODO
-            /*
-            $table->foreign('alcoholic_id')
-                   ->references('id')
-                   ->on('users');
-            $table->foreign('patron_id')
-                   ->references('id')
-                   ->on('users');
-            */
         });
     }
 

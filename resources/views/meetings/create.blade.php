@@ -16,6 +16,11 @@
         </p>
 
         <p>
+            {{ Form::label('with', 'With') }}
+            {{ Form::select('with', $available_users) }}
+        </p>
+
+        <p>
             {{ Form::submit('Submit!') }}
         </p>
 

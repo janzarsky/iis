@@ -14,6 +14,14 @@
                     <a href="{{ route('meetings.delete', ['id' => $m->id]) }}">Delete</a>
                 </p>
             @endforeach
+        <h3>Waiting for acceptation</h3>
+            @foreach ($waiting as $m)
+                <p>
+                    {{ json_encode($m, JSON_PRETTY_PRINT) }}
+                    <a href="{{ route('meetings.detail', ['id' => $m->id]) }}">Detail</a>
+                    <a href="{{ route('meetings.delete', ['id' => $m->id]) }}">Delete</a>
+                </p>
+            @endforeach
         <h3>Upcoming</h3>
             @foreach ($upcoming as $m)
                 <p>

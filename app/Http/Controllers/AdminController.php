@@ -64,9 +64,8 @@ class AdminController extends Controller
             $user->email = Input::get('email');
             $user->password = Hash::make(Input::get('email'));
 
-            // TODO
-            $user->patron_id = 1;
-            $user->specialist_id = 1;
+            $user->patron_id = 0;
+            $user->specialist_id = 0;
 
             $user->save();
 

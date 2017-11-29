@@ -9,24 +9,42 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class MeetingController extends Controller
 {
 
     public function index()
     {
-        $upcoming = Meeting::where('date', '>=', Carbon::now())
+        $user_id = Auth::user()->id;
+
+        $vals = array();
+
+        $vals['upcoming'] = Meeting::where(function ($query) {
+                $query->where('user1_id', Auth::user()->id)
+                    ->orWhere('user2_id', Auth::user()->id);
+            })
+            ->where('date', '>=', Carbon::now())
             ->where('confirmed', true)
             ->get();
 
-        $past = Meeting::where('date', '<', Carbon::now())
+        $vals['past'] = Meeting::where(function ($query) {
+                $query->where('user1_id', Auth::user()->id)
+                    ->orWhere('user2_id', Auth::user()->id);
+            })
+            ->where('date', '<', Carbon::now())
             ->where('confirmed', true)
             ->get();
 
-        $invites = Meeting::where('confirmed', false)->get();
+        $vals['invites'] = Meeting::where('user2_id', $user_id)
+            ->where('confirmed', false)
+            ->get();
 
-        return view('meetings.index', ['upcoming' => $upcoming, 'past' => $past,
-            'invites' => $invites]);
+        $vals['waiting'] = Meeting::where('user1_id', $user_id)
+            ->where('confirmed', false)
+            ->get();
+
+        return view('meetings.index', $vals);
     }
 
     public function accept($id)
@@ -55,7 +73,21 @@ class MeetingController extends Controller
 
     public function create()
     {
-        return view('meetings.create');
+        $user = Auth::user();
+        $available_users = array();
+
+        if ($user->patron_id != 0) {
+            $patron = User::find($user->patron_id);
+            $available_users[$user->patron_id] = $patron->name . ' (my patron)';
+        }
+
+        $users = User::where('patron_id', $user->id)->get();
+
+        foreach ($users as $u) {
+            $available_users[$u->id] = $u->name;
+        }
+
+        return view('meetings.create', ['available_users' => $available_users]);
     }
 
     public function create_post()
@@ -63,6 +95,7 @@ class MeetingController extends Controller
 		$rules = array(
             'location' => 'required',
             'date' => 'required',
+            'with' => 'required',
         );
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -77,11 +110,9 @@ class MeetingController extends Controller
 
             $meeting->location = Input::get('location');
             $meeting->date = Input::get('date');
-
-            // TODO
-            $meeting->user_id = 1;
-            $meeting->alcoholic_id = 1;
-            $meeting->patron_id = 1;
+            $meeting->user1_id = Auth::user()->id;
+            $meeting->user2_id = Input::get('with');
+            $meeting->confirmed = false;
 
             $meeting->save();
 
