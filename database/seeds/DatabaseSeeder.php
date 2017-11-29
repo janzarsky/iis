@@ -19,12 +19,6 @@ class DatabaseSeeder extends Seeder
             'is_alcoholic' => true,
         ]);
         DB::table('users')->insert([
-            'name' => 'patron',
-            'email' => 'patron@example.org',
-            'password' => Hash::make('asdf'),
-            'is_patron' => true,
-        ]);
-        DB::table('users')->insert([
             'name' => 'specialist',
             'email' => 'specialist@example.org',
             'password' => Hash::make('asdf'),

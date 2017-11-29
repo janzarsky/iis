@@ -30,6 +30,13 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::get('/admin', ['as' => 'admin',
         'uses' => 'AdminController@index']);
+    Route::get('/admin/detail/{id}', ['as' => 'admin.detail',
+        'uses' => 'AdminController@detail']);
+    Route::get('/admin/delete/{id}', ['as' => 'admin.delete',
+        'uses' => 'AdminController@delete']);
+    Route::get('/admin/create', ['as' => 'admin.create',
+        'uses' => 'AdminController@create']);
+    Route::post('/admin/create', 'AdminController@create_post');
 });
 
 Route::group(['middleware' => 'guest'], function () {

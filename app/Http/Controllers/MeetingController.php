@@ -70,7 +70,7 @@ class MeetingController extends Controller
 		if ($validator->fails()) {
 			return Redirect::route('meetings.create')
 				->withErrors($validator)
-				->withInput(Input);
+				->withInput(Input::all());
         }
         else {
             $meeting = new Meeting;
