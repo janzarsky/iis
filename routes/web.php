@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/meetings', 'MeetingController@index');
+
+
+Route::get('/login', ['as' => 'login', 'uses' => 'UserController@showLogin']);
+Route::post('/login', 'UserController@doLogin');

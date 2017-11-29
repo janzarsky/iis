@@ -15,25 +15,25 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'alcoholic',
             'email' => 'alcoholic@example.org',
-            'password' => 'asdf',
+            'password' => Hash::make('asdf'),
             'is_alcoholic' => true,
         ]);
         DB::table('users')->insert([
             'name' => 'patron',
             'email' => 'patron@example.org',
-            'password' => 'asdf',
+            'password' => Hash::make('asdf'),
             'is_patron' => true,
         ]);
         DB::table('users')->insert([
             'name' => 'specialist',
             'email' => 'specialist@example.org',
-            'password' => 'asdf',
+            'password' => Hash::make('asdf'),
             'is_specialist' => true,
         ]);
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@example.org',
-            'password' => 'asdf',
+            'password' => Hash::make('asdf'),
             'is_admin' => true,
         ]);
 
