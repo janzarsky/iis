@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Meeting;
 use App\Http\Controllers\Controller;
 
 class MeetingController extends Controller
@@ -15,6 +16,8 @@ class MeetingController extends Controller
 
     public function index()
     {
-        return view('meetings.index', ['text' => 'asdfqefwfds']);
+        $meetings = Meeting::all();
+
+        return view('meetings.index', ['meetings' => $meetings]);
     }
 }

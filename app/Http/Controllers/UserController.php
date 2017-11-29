@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
     public function showLogin()
     {
         return view('users.login', []);
