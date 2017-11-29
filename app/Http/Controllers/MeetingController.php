@@ -26,6 +26,9 @@ class MeetingController extends Controller
             })
             ->where('date', '>=', Carbon::now())
             ->where('confirmed', true)
+            ->join('users as u1', 'meetings.user1_id', '=', 'u1.id')
+            ->join('users as u2', 'meetings.user2_id', '=', 'u2.id')
+            ->select(['u1.name as name1', 'u2.name as name2', 'date', 'location'])
             ->get();
 
         $vals['past'] = Meeting::where(function ($query) {
@@ -34,14 +37,23 @@ class MeetingController extends Controller
             })
             ->where('date', '<', Carbon::now())
             ->where('confirmed', true)
+            ->join('users as u1', 'meetings.user1_id', '=', 'u1.id')
+            ->join('users as u2', 'meetings.user2_id', '=', 'u2.id')
+            ->select(['u1.name as name1', 'u2.name as name2', 'date', 'location'])
             ->get();
 
         $vals['invites'] = Meeting::where('user2_id', $user_id)
             ->where('confirmed', false)
+            ->join('users as u1', 'meetings.user1_id', '=', 'u1.id')
+            ->join('users as u2', 'meetings.user2_id', '=', 'u2.id')
+            ->select(['u1.name as name1', 'u2.name as name2', 'date', 'location'])
             ->get();
 
         $vals['waiting'] = Meeting::where('user1_id', $user_id)
             ->where('confirmed', false)
+            ->join('users as u1', 'meetings.user1_id', '=', 'u1.id')
+            ->join('users as u2', 'meetings.user2_id', '=', 'u2.id')
+            ->select(['u1.name as name1', 'u2.name as name2', 'date', 'location'])
             ->get();
 
         return view('meetings.index', $vals);
