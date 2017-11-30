@@ -17,7 +17,13 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.index', ['users' => User::All()]);
+        $users = User::join('users as u1', 'users.specialist_id', '=', 'u1.id')
+            ->select(['users.name', 'users.email', 'users.is_alcoholic',
+                'users.is_patron', 'users.is_specialist', 'users.is_admin',
+                'u1.name as specialist_name'])
+            ->get();
+
+        return view('admin.index', ['users' => $users]);
     }
 
     public function detail($id)
