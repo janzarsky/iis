@@ -89,6 +89,8 @@ class AdminController extends Controller
 
             $user->save();
 
+            request()->session()->flash('alert-success',
+                'User successfully updated');
             return Redirect::to('admin');
         }
     }
@@ -168,9 +170,6 @@ class AdminController extends Controller
             $user->email = Input::get('email');
             $user->password = Hash::make(Input::get('password'));
 
-            $user->patron_id = 0;
-            $user->specialist_id = 0;
-
             switch (Input::get('role')) {
             case 'admin':
                 $user->is_admin = true;
@@ -185,6 +184,8 @@ class AdminController extends Controller
 
             $user->save();
 
+            request()->session()->flash('alert-success',
+                'User successfully created');
             return Redirect::to('admin');
         }
     }
