@@ -17,10 +17,8 @@ class AdminController extends Controller
 
     public function index()
     {
-        $users = User::join('users as u1', 'users.specialist_id', '=', 'u1.id')
-            ->select(['users.id', 'users.name', 'users.email',
-                'users.is_alcoholic', 'users.is_patron', 'users.is_specialist',
-                'users.is_admin', 'u1.name as specialist_name'])
+        $users = User::leftJoin('users as u1', 'users.specialist_id', '=', 'u1.id')
+            ->select(['users.*', 'u1.name as specialist_name'])
             ->get();
 
         return view('admin.index', ['users' => $users]);
@@ -28,7 +26,18 @@ class AdminController extends Controller
 
     public function detail($id)
     {
-        return view('admin.detail', ['user' => User::find($id)]);
+        $user = User::where('users.id', $id)
+            ->leftJoin('users as u1', 'users.specialist_id', '=', 'u1.id')
+            ->select(['users.*', 'u1.name as specialist_name',
+                'u1.id as specialist_id'])
+            ->get()->first();
+
+        if ($user) {
+            return view('admin.detail', ['user' => $user]);
+        }
+        else {
+            return Redirect::route('admin');
+        }
     }
 
     public function edit($id)

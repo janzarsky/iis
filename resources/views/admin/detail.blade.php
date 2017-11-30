@@ -3,9 +3,43 @@
 @section('title', 'User detail')
 
 @section('content')
+
+<p><strong>Name:</strong> {{ $user->name }}</p>
+<p><strong>Email:</strong> {{ $user->email }}</p>
+<p><strong>Role:</strong>
+@if ($user->is_alcoholic)
+    Alcoholic
+@elseif ($user->is_specialist)
+    Specialist
+@elseif ($user->is_admin)
+    Admin
+@else
+    None
+@endif
+</p>
+<p><strong>Is patron?:</strong>
+@if ($user->is_patron)
+    Yes
+@else
+    No
+@endif
+</p>
+@if ($user->specialist_id)
 <p>
-{{ json_encode($user, JSON_PRETTY_PRINT) }}
+<strong>Specialist:</strong> {{ $user->specialist_name }}
+<a href="{{ route('admin.detail', ['id' => $user->specialist_id]) }}">Detail</a>
+</p>
+@endif
+
+<p><strong>Created:</strong> {{ $user->created_at }}</p>
+<p><strong>Updated:</strong> {{ $user->created_at }}</p>
+
+<p>
+    <a href="{{ route('admin.edit', ['id' => $user->id]) }}">Edit</a>
+    <a href="{{ route('admin.delete', ['id' => $user->id]) }}">Delete</a>
 </p>
 
-<a href="{{ route('admin') }}">Back to all users</a>
+<p>
+    <a href="{{ route('admin') }}">Back to all users</a>
+</p>
 @endsection

@@ -5,30 +5,39 @@
 @section('content')
 {{ Form::open(['url' => 'admin/create']) }}
 
-<p>
+<div class="form-group">
     {{ Form::label('name', 'Name') }}
-    {{ Form::text('name') }}
-</p>
+    {{ Form::text('name', '', ['class' => 'form-control ' .
+        ($errors->has('name') ? 'is-invalid' : '') ]) }}
+    {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
+</div>
 
-<p>
+<div class="form-group">
     {{ Form::label('email', 'Email') }}
-    {{ Form::text('email') }}
-</p>
+    {{ Form::text('email', '', ['class' => 'form-control ' .
+        ($errors->has('email') ? 'is-invalid' : '') ]) }}
+    {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
+</div>
 
-<p>
+<div class="form-group">
     {{ Form::label('password', 'Password') }}
-    {{ Form::password('password') }}
-</p>
+    {{ Form::password('password', ['class' => 'form-control ' .
+        ($errors->has('password') ? 'is-invalid' : '') ]) }}
+    {!! $errors->first('password', '<div class="invalid-feedback">:message</div>') !!}
+</div>
 
-<p>
+<div class="form-group">
     {{ Form::label('role', 'Role') }}
     {{ Form::select('role', ['alcoholic' => 'Alcoholic',
-        'specialist' => 'Specialist', 'admin' => 'Admin']) }}
-</p>
+        'specialist' => 'Specialist', 'admin' => 'Admin'], '',
+        ['class' => 'form-control ' .
+        ($errors->has('role') ? 'is-invalid' : '') ]) }}
+    {!! $errors->first('alcoholic', '<div class="invalid-feedback">:message</div>') !!}
+</div>
 
-<p>
-    {{ Form::submit('Submit') }}
-</p>
+<div class="form-group">
+    {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+</div>
 
 {{ Form::close() }}
 @endsection
