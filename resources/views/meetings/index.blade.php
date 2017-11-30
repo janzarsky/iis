@@ -3,7 +3,9 @@
 @section('title', 'Meetings')
 
 @section('content')
-<a href="{{ route('meetings.create') }}">Create meeting</a>
+<p>
+    <a href="{{ route('meetings.create') }}" class="btn btn-primary">Create meeting</a>
+</p>
 
 <h3>Invites</h3>
 <table class="table">
@@ -24,9 +26,12 @@
             <td>{{ $m->date }}</td>
             <td>{{ $m->location }}</td>
             <td>
-                <a href="{{ route('meetings.accept', ['id' => $m->id]) }}">Accept meeting</a>
-                <a href="{{ route('meetings.detail', ['id' => $m->id]) }}">Detail</a>
-                <a href="{{ route('meetings.delete', ['id' => $m->id]) }}">Delete</a>
+                <a href="{{ route('meetings.accept', ['id' => $m->id]) }}"
+                    class="btn btn-primary">Accept meeting</a>
+                <a href="{{ route('meetings.detail', ['id' => $m->id]) }}"
+                    class="btn btn-outline-primary">Detail</a>
+                <a href="{{ route('meetings.delete', ['id' => $m->id]) }}"
+                    class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
         @endforeach
@@ -52,8 +57,10 @@
             <td>{{ $m->date }}</td>
             <td>{{ $m->location }}</td>
             <td>
-                <a href="{{ route('meetings.detail', ['id' => $m->id]) }}">Detail</a>
-                <a href="{{ route('meetings.delete', ['id' => $m->id]) }}">Delete</a>
+                <a href="{{ route('meetings.detail', ['id' => $m->id]) }}"
+                    class="btn btn-outline-primary">Detail</a>
+                <a href="{{ route('meetings.delete', ['id' => $m->id]) }}"
+                    class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
         @endforeach
@@ -79,8 +86,10 @@
             <td>{{ $m->date }}</td>
             <td>{{ $m->location }}</td>
             <td>
-                <a href="{{ route('meetings.detail', ['id' => $m->id]) }}">Detail</a>
-                <a href="{{ route('meetings.delete', ['id' => $m->id]) }}">Delete</a>
+                <a href="{{ route('meetings.detail', ['id' => $m->id]) }}"
+                    class="btn btn-outline-primary">Detail</a>
+                <a href="{{ route('meetings.delete', ['id' => $m->id]) }}"
+                    class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
         @endforeach
@@ -106,8 +115,10 @@
             <td>{{ $m->date }}</td>
             <td>{{ $m->location }}</td>
             <td>
-                <a href="{{ route('meetings.detail', ['id' => $m->id]) }}">Detail</a>
-                <a href="{{ route('meetings.delete', ['id' => $m->id]) }}">Delete</a>
+                <a href="{{ route('meetings.detail', ['id' => $m->id]) }}"
+                    class="btn btn-outline-primary">Detail</a>
+                <a href="{{ route('meetings.delete', ['id' => $m->id]) }}"
+                    class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
         @endforeach

@@ -37,6 +37,7 @@
 
 <div class="form-group">
     {{ Form::submit('Create user', ['class' => 'btn btn-primary']) }}
+    <a href="{{ route('admin') }}">Back to users</a>
 </div>
 
 {{ Form::close() }}

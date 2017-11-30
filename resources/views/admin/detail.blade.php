@@ -39,5 +39,6 @@
         class="btn btn-outline-primary">Edit</a>
     <a href="{{ route('admin.delete', ['id' => $user->id]) }}"
         class="btn btn-outline-danger">Delete</a>
+    <a href="{{ route('admin') }}">Back to users</a>
 </p>
 @endsection

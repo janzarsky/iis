@@ -74,7 +74,11 @@ class MeetingController extends Controller
 
     public function detail($id)
     {
-        $meeting = Meeting::find($id);
+        $meeting = Meeting::where('meetings.id', $id)
+            ->join('users as u1', 'meetings.user1_id', '=', 'u1.id')
+            ->join('users as u2', 'meetings.user2_id', '=', 'u2.id')
+            ->select(['meetings.*', 'u1.name as name1', 'u2.name as name2'])
+            ->get()->first();
 
         return view('meetings.detail', ['meeting' => $meeting]);
     }
