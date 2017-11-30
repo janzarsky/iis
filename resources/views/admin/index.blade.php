@@ -44,6 +44,7 @@
             <td>{{ $u->specialist_name }}</td>
             <td>
                 <a href="{{ route('admin.detail', ['id' => $u->id]) }}">Detail</a>
+                <a href="{{ route('admin.edit', ['id' => $u->id]) }}">Edit</a>
                 <a href="{{ route('admin.delete', ['id' => $u->id]) }}">Delete</a>
             </td>
         </tr>
