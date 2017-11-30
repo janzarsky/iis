@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned()->index();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
@@ -22,11 +22,14 @@ class CreateUsersTable extends Migration
             $table->boolean('is_patron')->default(false);
             $table->boolean('is_specialist')->default(false);
             $table->boolean('is_admin')->default(false);
-            $table->integer('patron_id')->nullable();
-            $table->integer('specialist_id')->nullable();
+            $table->integer('patron_id')->unsigned()->nullable();
+            $table->integer('specialist_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('patron_id')->references('id')->on('users');
+            $table->foreign('specialist_id')->references('id')->on('users');
         });
     }
 

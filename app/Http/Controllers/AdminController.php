@@ -98,6 +98,27 @@ class AdminController extends Controller
         $user = User::find($id);
 
         if ($user) {
+            if ($user->is_admin) {
+                $other_admins = User::where('is_admin', true)
+                    ->where('id', '!=', $user->id)
+                    ->get();
+
+                if ($other_admins->isEmpty())
+                    return Redirect::route('admin');
+            }
+            else if ($user->is_specialist) {
+                $pacients = User::where('specialist_id', $user->id)->get();
+
+                if (!$pacients->isEmpty())
+                    return Redirect::route('admin');
+            }
+            else if ($user->is_patron) {
+                $alcoholics = User::where('patron_id', $user->id)->get();
+
+                if (!$alcoholics->isEmpty())
+                    return Redirect::route('admin');
+            }
+
             $user->delete();
         }
 

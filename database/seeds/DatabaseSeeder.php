@@ -20,8 +20,6 @@ class DatabaseSeeder extends Seeder
         $user1->password = Hash::make('asdf');
         $user1->is_alcoholic = true;
         $user1->is_patron = true;
-        $user1->patron_id = 2;
-        $user1->specialist_id = 4;
         $user1->save();
         
         $user2 = new User;
@@ -30,8 +28,6 @@ class DatabaseSeeder extends Seeder
         $user2->password = Hash::make('asdf');
         $user2->is_alcoholic = true;
         $user2->is_patron = true;
-        $user2->patron_id = 3;
-        $user2->specialist_id = 4;
         $user2->save();
         
         $user3 = new User;
@@ -40,8 +36,6 @@ class DatabaseSeeder extends Seeder
         $user3->password = Hash::make('asdf');
         $user3->is_alcoholic = true;
         $user3->is_patron = true;
-        $user3->patron_id = 1;
-        $user3->specialist_id = 4;
         $user3->save();
         
         $user4 = new User;
@@ -51,12 +45,34 @@ class DatabaseSeeder extends Seeder
         $user4->is_specialist = true;
         $user4->save();
         
-        $user4 = new User;
-        $user4->name = 'admin';
-        $user4->email = 'admin@example.org';
-        $user4->password = Hash::make('asdf');
-        $user4->is_admin = true;
-        $user4->save();
+        $user5 = new User;
+        $user5->name = 'admin';
+        $user5->email = 'admin@example.org';
+        $user5->password = Hash::make('asdf');
+        $user5->is_admin = true;
+        $user5->save();
+
+        $user6 = new User;
+        $user6->name = 'alcoholic_deletable';
+        $user6->email = 'alcoholic_deletable3@example.org';
+        $user6->password = Hash::make('asdf');
+        $user6->is_alcoholic = true;
+        $user6->save();
+
+        $user1 = User::find(1);
+        $user1->patron_id = 2;
+        $user1->specialist_id = 4;
+        $user1->save();
+
+        $user2 = User::find(2);
+        $user2->patron_id = 3;
+        $user2->specialist_id = 4;
+        $user2->save();
+
+        $user3 = User::find(3);
+        $user3->patron_id = 1;
+        $user3->specialist_id = 4;
+        $user3->save();
 
         // Meetings
         $mtg1 = new Meeting;
