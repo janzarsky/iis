@@ -35,11 +35,9 @@
 <p><strong>Updated:</strong> {{ $user->created_at }}</p>
 
 <p>
-    <a href="{{ route('admin.edit', ['id' => $user->id]) }}">Edit</a>
-    <a href="{{ route('admin.delete', ['id' => $user->id]) }}">Delete</a>
-</p>
-
-<p>
-    <a href="{{ route('admin') }}">Back to all users</a>
+    <a href="{{ route('admin.edit', ['id' => $user->id]) }}"
+        class="btn btn-outline-primary">Edit</a>
+    <a href="{{ route('admin.delete', ['id' => $user->id]) }}"
+        class="btn btn-outline-danger">Delete</a>
 </p>
 @endsection

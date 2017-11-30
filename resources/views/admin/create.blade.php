@@ -36,10 +36,8 @@
 </div>
 
 <div class="form-group">
-    {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+    {{ Form::submit('Create user', ['class' => 'btn btn-primary']) }}
 </div>
 
 {{ Form::close() }}
-
-<a href="{{ route('admin') }}">Back to all users</a>
 @endsection

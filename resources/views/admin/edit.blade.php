@@ -26,6 +26,9 @@
     {{ Form::password('password', ['class' => 'form-control ' .
         ($errors->has('password') ? 'is-invalid' : '') ]) }}
     {!! $errors->first('password', '<div class="invalid-feedback">:message</div>') !!}
+    <small class="form-text text-muted">
+        Leave the field empty if you wish to keep the current password.
+    </small>
 </div>
 
 <div class="form-group">
@@ -38,10 +41,8 @@
 </div>
 
 <div class="form-group">
-    {{ Form::submit('Submit', ['class' => 'btn btn-primary']) }}
+    {{ Form::submit('Save changes', ['class' => 'btn btn-primary']) }}
 </div>
 
 {{ Form::close() }}
-
-<a href="{{ route('admin') }}">Back to all users</a>
 @endsection

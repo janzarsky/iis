@@ -22,27 +22,21 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                @if (Auth::check())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/meetings') }}">Meetings</a>
                 </li>
-                @endif
-                @if (Auth::check() && Auth::user()->is_admin)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/admin') }}">Users</a>
+                    <a class="nav-link" href="{{ url('/admin') }}">Admin panel</a>
                 </li>
-                @endif
-                @if (Auth::check())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
                 </li>
-                @endif
             </ul>
         </div>
     </nav>
 
-    <div class="container-fluid">
-        <h1>IIS: @yield('title')</h1>
+    <div class="container" style="padding-top:15px">
+        <h1>@yield('title')</h1>
 
         @foreach (['danger', 'warning', 'success', 'info'] as $msg)
         @if(Session::has('alert-' . $msg))
@@ -55,7 +49,6 @@
         @endforeach
 
         @yield('content')
-
     </div>
 
     <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>

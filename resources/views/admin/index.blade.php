@@ -3,7 +3,10 @@
 @section('title', 'Users')
 
 @section('content')
-<a href="{{ route('admin.create') }}">Create user</a>
+
+<p>
+    <a href="{{ route('admin.create') }}" class="btn btn-primary">Create user</a>
+</p>
 
 <h3>All users</h3>
 
@@ -21,7 +24,10 @@
     <tbody>
         @foreach ($users as $u)
         <tr>
-            <td>{{ $u->name }}</td>
+            <td>
+                <a href="{{ route('admin.detail', ['id' => $u->id]) }}">
+                    {{ $u->name }}</a>
+            </td>
             <td>{{ $u->email }}</td>
             <td>
             @if ($u->is_alcoholic)
@@ -41,11 +47,15 @@
                 No
             @endif
             </td>
-            <td>{{ $u->specialist_name }}</td>
             <td>
-                <a href="{{ route('admin.detail', ['id' => $u->id]) }}">Detail</a>
-                <a href="{{ route('admin.edit', ['id' => $u->id]) }}">Edit</a>
-                <a href="{{ route('admin.delete', ['id' => $u->id]) }}">Delete</a>
+                <a href="{{ route('admin.detail', ['id' => $u->specialist_id]) }}">
+                    {{ $u->specialist_name }}</a>
+            </td>
+            <td>
+                <a href="{{ route('admin.edit', ['id' => $u->id]) }}"
+                    class="btn btn-outline-primary">Edit</a>
+                <a href="{{ route('admin.delete', ['id' => $u->id]) }}"
+                    class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
         @endforeach
