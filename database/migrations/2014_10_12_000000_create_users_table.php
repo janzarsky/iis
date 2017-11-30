@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->integer('specialist_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

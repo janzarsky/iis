@@ -21,6 +21,7 @@ class CreateMeetingsTable extends Migration
             $table->string('location', 200);
             $table->boolean('confirmed')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
