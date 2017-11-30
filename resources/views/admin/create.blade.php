@@ -40,4 +40,6 @@
 </div>
 
 {{ Form::close() }}
+
+<a href="{{ route('admin') }}">Back to all users</a>
 @endsection

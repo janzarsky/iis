@@ -45,6 +45,54 @@ class AdminController extends Controller
         return view('admin.edit', ['user' => User::find($id)]);
     }
 
+    public function edit_post()
+    {
+		$rules = array(
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'role' => 'required',
+        );
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			return Redirect::route('admin.edit', ['id' => Input::get('id')])
+				->withErrors($validator)
+				->withInput(Input::except('password'));
+        }
+        else {
+            $user = User::find(Input::get('id'));
+
+            $user->name = Input::get('name');
+            $user->email = Input::get('email');
+
+            if (Input::get('password'))
+                $user->password = Hash::make(Input::get('password'));
+
+            switch (Input::get('role')) {
+            case 'admin':
+                $user->is_admin = true;
+                $user->is_alcoholic = false;
+                $user->is_specialist = false;
+                break;
+            case 'alcoholic':
+                $user->is_alcoholic = true;
+                $user->is_admin = false;
+                $user->is_specialist = false;
+                break;
+            case 'specialist':
+                $user->is_specialist = true;
+                $user->is_alcoholic = false;
+                $user->is_admin = false;
+                break;
+            }
+
+            $user->save();
+
+            return Redirect::to('admin');
+        }
+    }
+
     public function delete($id)
     {
         $user = User::find($id);
@@ -82,10 +130,22 @@ class AdminController extends Controller
 
             $user->name = Input::get('name');
             $user->email = Input::get('email');
-            $user->password = Hash::make(Input::get('email'));
+            $user->password = Hash::make(Input::get('password'));
 
             $user->patron_id = 0;
             $user->specialist_id = 0;
+
+            switch (Input::get('role')) {
+            case 'admin':
+                $user->is_admin = true;
+                break;
+            case 'alcoholic':
+                $user->is_alcoholic = true;
+                break;
+            case 'specialist':
+                $user->is_specialist = true;
+                break;
+            }
 
             $user->save();
 

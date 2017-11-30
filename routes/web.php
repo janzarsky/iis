@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
         'uses' => 'AdminController@detail']);
     Route::get('/admin/edit/{id}', ['as' => 'admin.edit',
         'uses' => 'AdminController@edit']);
+    Route::post('/admin/edit', 'AdminController@edit_post');
     Route::get('/admin/delete/{id}', ['as' => 'admin.delete',
         'uses' => 'AdminController@delete']);
     Route::get('/admin/create', ['as' => 'admin.create',
