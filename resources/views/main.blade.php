@@ -14,8 +14,8 @@
         <a class="navbar-brand" href="{{ url('/') }}">IIS: Anonymní alkoholici</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false"
+            data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false"
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -42,6 +42,7 @@
 
     </div>
 
+    <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>

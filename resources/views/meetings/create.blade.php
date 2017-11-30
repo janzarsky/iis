@@ -5,24 +5,24 @@
 @section('content')
 {{ Form::open(['url' => 'meetings/create']) }}
 
-<p>
+<div class="form-group">
     {{ Form::label('location', 'Location') }}
-    {{ Form::text('location') }}
-</p>
+    {{ Form::text('location', '', ['class' => 'form-control']) }}
+</div>
 
-<p>
+<div class="form-group">
     {{ Form::label('date', 'Date') }}
-    {{ Form::text('date') }}
-</p>
+    {{ Form::text('date', '', ['class' => 'form-control']) }}
+</div>
 
-<p>
+<div class="form-group">
     {{ Form::label('with', 'With') }}
-    {{ Form::select('with', $available_users) }}
-</p>
+    {{ Form::select('with', $available_users, '', ['class' => 'form-control']) }}
+</div>
 
-<p>
+<div class="form-group">
     {{ Form::submit('Submit!') }}
-</p>
+</div>
 
 {{ Form::close() }}
 @endsection
