@@ -103,23 +103,38 @@ class AdminController extends Controller
                     ->where('id', '!=', $user->id)
                     ->get();
 
-                if ($other_admins->isEmpty())
+                if ($other_admins->isEmpty()) {
+                    request()->session()->flash('alert-danger',
+                        'Cannot remove user, no other admin exists!');
                     return Redirect::route('admin');
+                }
             }
             else if ($user->is_specialist) {
                 $pacients = User::where('specialist_id', $user->id)->get();
 
-                if (!$pacients->isEmpty())
+                if (!$pacients->isEmpty()) {
+                    request()->session()->flash('alert-danger',
+                        'Cannot remove user, the user is specialist for some users!');
                     return Redirect::route('admin');
+                }
             }
             else if ($user->is_patron) {
                 $alcoholics = User::where('patron_id', $user->id)->get();
 
-                if (!$alcoholics->isEmpty())
+                if (!$alcoholics->isEmpty()) {
+                    request()->session()->flash('alert-danger',
+                        'Cannot remove user, the user is patron for some users!');
                     return Redirect::route('admin');
+                }
             }
 
+            request()->session()->flash('alert-success',
+                'User successfully deleted');
             $user->delete();
+        }
+        else {
+            request()->session()->flash('alert-warning',
+                'No user found');
         }
 
         return Redirect::route('admin');
