@@ -24,6 +24,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/meetings/delete/{id}', ['as' => 'meetings.delete',
         'uses' => 'MeetingController@delete']);
 
+    Route::get('/patrons', ['as' => 'patrons',
+        'uses' => 'PatronController@index']);
+    Route::get('/patrons/remove', ['as' => 'patrons.remove',
+        'uses' => 'PatronController@remove']);
+    Route::get('/patrons/cancel', ['as' => 'patrons.cancel',
+        'uses' => 'PatronController@cancel']);
+    Route::get('/patrons/request', ['as' => 'patrons.request',
+        'uses' => 'PatronController@request']);
+    Route::post('/patrons/request', 'PatronController@request_post');
+    Route::get('/patrons/stop', ['as' => 'patrons.stop',
+        'uses' => 'PatronController@stop']);
+    Route::get('/patrons/accept/{$id}', ['as' => 'patrons.accept',
+        'uses' => 'PatronController@accept']);
+
     Route::get('/logout', ['as' => 'logout', 'uses' => 'UserController@logout']);
 });
 

@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_specialist')->default(false);
             $table->boolean('is_admin')->default(false);
             $table->integer('patron_id')->unsigned()->nullable();
+            $table->boolean('patron_confirmed')->default(false);
             $table->integer('specialist_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();

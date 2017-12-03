@@ -25,7 +25,7 @@ class Authenticate
                 return response('Unauthorized', 401);
             }
             else {
-                return redirect('/login');
+                return Redirect::route('login');
             }
         }
     }

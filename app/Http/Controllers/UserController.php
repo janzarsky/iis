@@ -18,7 +18,6 @@ class UserController extends Controller
 
     public function doLogin()
     {
-
 		$rules = array(
             'email' => 'required|email',
             'password' => 'required|min:3'
@@ -27,7 +26,7 @@ class UserController extends Controller
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			return Redirect::to('login')
+			return Redirect::route('login')
 				->withErrors($validator)
 				->withInput(Input::except('password'));
 		} else {
@@ -37,9 +36,9 @@ class UserController extends Controller
 			);
 
 			if (Auth::attempt($userdata)) {
-                return Redirect::to('meetings');
+                return Redirect::route('meetings');
 			} else {
-                return Redirect::to('login')
+                return Redirect::route('login')
                     ->withErrors(['email' => 'Invalid email or password']);
 			}
 		}

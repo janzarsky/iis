@@ -27,6 +27,11 @@
                     <a class="nav-link" href="{{ url('/meetings') }}">Meetings</a>
                 </li>
                 @endif
+                @if (Auth::check())
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/patrons') }}">Patrons</a>
+                </li>
+                @endif
                 @if (Auth::check() && Auth::user()->is_admin)
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/admin') }}">Users</a>

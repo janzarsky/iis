@@ -62,16 +62,19 @@ class DatabaseSeeder extends Seeder
         $user1 = User::find(1);
         $user1->patron_id = 2;
         $user1->specialist_id = 4;
+        $user1->patron_confirmed = true;
         $user1->save();
 
         $user2 = User::find(2);
         $user2->patron_id = 3;
         $user2->specialist_id = 4;
+        $user2->patron_confirmed = true;
         $user2->save();
 
         $user3 = User::find(3);
         $user3->patron_id = 1;
         $user3->specialist_id = 4;
+        $user3->patron_confirmed = true;
         $user3->save();
 
         // Meetings
