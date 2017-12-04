@@ -5,7 +5,7 @@
 @section('content')
 
 <p>
-    <a href="{{ route('sessions.create') }}" class="btn btn-primary">Create sessions</a>
+    <a href="{{ route('sessions.create') }}" class="btn btn-primary">Create session</a>
 </p>
 
 <h3>Sessions created by me</h3>

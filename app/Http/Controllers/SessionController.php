@@ -62,16 +62,36 @@ class SessionController extends Controller
 
     public function create()
     {
-        request()->session()->flash('alert-warning',
-            'Not implemented');
-        return Redirect::route('sessions');
+        return view('sessions.create');
     }
 
     public function create_post()
     {
-        request()->session()->flash('alert-warning',
-            'Not implemented');
-        return Redirect::route('sessions');
+		$rules = array(
+            'location' => 'required',
+            'date' => 'required',
+        );
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			return Redirect::route('sessions.create')
+				->withErrors($validator)
+				->withInput(Input::all());
+        }
+        else {
+            $session = new Session;
+
+            $session->location = Input::get('location');
+            $session->date = Input::get('date');
+            $session->organizer_id = Auth::user()->id;
+
+            $session->save();
+
+            request()->session()->flash('alert-success',
+                'Session successfuly created');
+            return Redirect::to('sessions');
+		}
     }
 
     public function attend($id)
