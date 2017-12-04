@@ -49,7 +49,13 @@ souborech je cesta k souboru promítnuta do názvu souboru, např. soubor
 definovat rozdílné reakce na různé metody (GET vs POST) i parametry URL (např.
 <code>/meetings/detail/{id}</code>).</p>
 
-<p>TODO</p>
+<h3>Models</h3>
+<p>Soubory:<br/>
+<code>app__Meeting.php</code><br/>
+<code>app__User.php</code></p>
+
+<p>Zapouzdřují data v databázi. Většina funkcionality je převzaná z rodičovské
+třídy <code>Model</code> frameworku Laravel.</p>
 
 <h3>Controllers</h3>
 <p>Soubory:<br/>
@@ -58,14 +64,27 @@ definovat rozdílné reakce na různé metody (GET vs POST) i parametry URL (nap
 <code>app__Http__Controllers__PatronController.php</code><br/>
 <code>app__Http__Controllers__UserController.php</code></p>
 
-<p>TODO</p>
+<p>Získávají data z databáze pomocí modelů a předávají je dále do views.</p>
 
-<h3>Models</h3>
-<p>Soubory:<br/>
-<code>app__Meeting.php</code><br/>
-<code>app__User.php</code></p>
+<h4>AdminController</h4>
+<p>Spravuje uživatele a jejich role. Umožňuje uživatele přidávat, mazat a
+upravovat. V systému jsou 3 role uživatelů: administrátor, specialista a
+alkoholik. Specialista se stará o alkoholiky (každý alkoholik má svého
+specialistu). Administrátor může jako jediný spravovat uživatele. Alkoholik
+je nejčastějším uživatelem, vytváří si schůzky se svým patronem (patronem může
+být kdokoliv).</p>
 
-<p>TODO</p>
+<h4>MeetingController</h4>
+<p>Spravuje schůzky, na kterých se alkoholik setká se svým patronem. Alkoholik
+i patron může vytvořit schůzku, druhý musí schůzku vždy schválit.</p>
+
+<h4>PatronController</h4>
+<p>Spravuje přiřazení patronů alkoholikům. Každý může mít právě jednoho patrona
+a může se starat právě o jednoho alkoholika. Každý alkoholik si může vybrat
+svého patrona, ten pak žádost musí schválit.</p>
+
+<h4>UserController</h4>
+<p>Stará se o přihlašování uživatelů do systému.</p>
 
 <h3>Views</h3>
 <p>Soubory:<br/>
@@ -81,7 +100,11 @@ definovat rozdílné reakce na různé metody (GET vs POST) i parametry URL (nap
 <code>resources__views__users__login.blade.php</code><br/>
 <code>resources__views__main.blade.php</code></p>
 
-<p>TODO</p>
+<p>Zobrazují data z kontroléru. Využívají Blade šablonovací systém, který
+má speciální syntaxi (viz <a href="https://laravel.com/docs/5.5/blade"
+target="_blank">laravel.com/docs/5.5/blade</a>). Pro práci s formuláři využívají
+zabudované nástroje (viz <a href="https://laravel.com/docs/4.2/html"
+target="_blank">laravel.com/docs/4.2/html</a>).</p>
 
 <h3>Middleware</h3>
 <p>Soubory:<br/>
@@ -89,21 +112,28 @@ definovat rozdílné reakce na různé metody (GET vs POST) i parametry URL (nap
 <code>app__Http__Middleware__Authenticate.php</code><br/>
 <code>app__Http__Middleware__RedirectIfAuthenticated.php</code></p>
 
-<p>TODO</p>
+<p>Middleware představuje funkce, které se volají před voláním funkce z
+kontroléru. V tomto projektu slouží k ověření, zda je uživatel přihlášený a zda
+má roli administrátora. Který middleware se zavolá je určeno v souboru
+<code>routes__web.php</code></p>
 
 <h3>Database migrations</h3>
 <p>Soubory:<br/>
 <code>database__migrations__2014_10_12_000000_create_users_table.php</code><br/>
 <code>database__migrations__2017_11_27_134756_create_meetings_table.php</code></p>
 
-<p>TODO</p>
+<p>Framework Laravel nepoužívá čisté SQL pro generování struktury databáze, ale
+tzv. database migrations. V nich je definovaná struktura databáze, která se pak
+vytvoří zavoláním příkazu <code>php artisan migrate</code>.</p>
 
 <h3>Database seeders</h3>
 
 <p>Soubory:<br/>
 <code>database__seeds__DatabaseSeeder.php</code></p>
 
-<p>TODO</p>
+<p>Slouží k naplnění databáze testovacími daty. Stejně jako database migrations
+nepracují s SQL. Pro naplnění databáze se používají stejné třídy modelů jako 
+později v celé aplikaci.</p>
 
 <h2>Instalace</h2>
 
@@ -148,8 +178,7 @@ definovat rozdílné reakce na různé metody (GET vs POST) i parametry URL (nap
 </ol>
 
 <h2>Známé problémy</h2>
-<p> ... Vše by mělo fungovat v pořádku.</p>
-
-
+<p>V aplikaci není implementované zadávání kontrol alkoholiků. Aplikace rovněž
+neumožňuje organizaci skupinových sezení.</p>
 
 </body></html>
