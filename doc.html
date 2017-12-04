@@ -36,6 +36,28 @@
 <tr><td>specialist@example.org</td><td>asdf</td><td>Odborník</td></tr>
 </tbody></table>
 
+<h2>Zadání</h2>
+<p>Navázali jsme na zadání z IDS "Klub anonymních alkoholiků".</p>
+
+<p>
+Navrhněte informační systém, který bude podporovat anonymní alkoholiky k organizaci sezení a
+evidenci vypitého alkoholu. Systém uchovává základní informace o alkoholicích, jako je jejich věk,
+pohlaví, patrony, kteří je podporují a se kterými se nepravidelně scházejí na různých místech a v
+různých datech a rovněž i informace o odbornících, kteří na ně lékařsky dohlíží. Odborníci musí mít
+patřičnou expertízu pro pečování o alkoholiky, a mít minimální lékařskou praxi, která je v systému
+evidována. Patronem však může být kdokoliv. Pravidelně se konají sezení, kterých se účastní až
+dvanáct alkoholiků a navíc můžou být přítomni jak patroni tak i odborníci a dohlížet nad diskuzí. U
+každého sezení nás zajímá datum, čas, a místo konání. Těchto míst je pouze několik oficiálních a
+dedikovaných. Každé sezení je vedeno jednou osobou. Neformální schůzky s patrony však mohou
+být organizovány v libovolné lokalitě. Alkoholici se musí alespoň třikrát ročně účastnit nějakého
+sezení, a v případě, že se více jak tři měsíce nedostaví na žádné sezení je jim systémem zaslána
+upomínka. U alkoholiků jsou pravidelně (i nepravidelně a nečekaně) prováděny kontroly odborníky,
+na kterých se měří míra alkoholu v jejich krvi. Tato míra vypitého alkoholu je pak evidována do
+systému, rovněž s původem a typem vypitého alkoholu. Alkoholici však mohou sami zaevidovat (ze
+špatného svědomí), že alkohol požili (tedy mimo prováděné kontroly) a tuto informaci rovněž přidat
+do systému.
+</p>
+
 <h2>Implementace</h2>
 Aplikace je implementována pomocí frameworku Laravel verze 5.5 (viz
 <a href="https://laravel.com/" target="_blank">laravel.com</a>). V odevzdaných
@@ -51,8 +73,11 @@ definovat rozdílné reakce na různé metody (GET vs POST) i parametry URL (nap
 
 <h3>Models</h3>
 <p>Soubory:<br/>
+<code>app__Check.php</code><br/>
 <code>app__Meeting.php</code><br/>
-<code>app__User.php</code></p>
+<code>app__Session.php</code><br/>
+<code>app__User.php</code><br/>
+<code>app__UserSession.php</code></p>
 
 <p>Zapouzdřují data v databázi. Většina funkcionality je převzaná z rodičovské
 třídy <code>Model</code> frameworku Laravel.</p>
@@ -60,31 +85,42 @@ třídy <code>Model</code> frameworku Laravel.</p>
 <h3>Controllers</h3>
 <p>Soubory:<br/>
 <code>app__Http__Controllers__AdminController.php</code><br/>
+<code>app__Http__Controllers__CheckController.php</code><br/>
 <code>app__Http__Controllers__MeetingController.php</code><br/>
 <code>app__Http__Controllers__PatronController.php</code><br/>
+<code>app__Http__Controllers__SessionController.php</code><br/>
 <code>app__Http__Controllers__UserController.php</code></p>
 
 <p>Získávají data z databáze pomocí modelů a předávají je dále do views.</p>
 
-<h4>AdminController</h4>
-<p>Spravuje uživatele a jejich role. Umožňuje uživatele přidávat, mazat a
-upravovat. V systému jsou 3 role uživatelů: administrátor, specialista a
-alkoholik. Specialista se stará o alkoholiky (každý alkoholik má svého
-specialistu). Administrátor může jako jediný spravovat uživatele. Alkoholik
-je nejčastějším uživatelem, vytváří si schůzky se svým patronem (patronem může
-být kdokoliv).</p>
+<dl>
+    <dt>AdminController</dt>
+    <dd>Spravuje uživatele a jejich role. Umožňuje uživatele přidávat, mazat a
+    upravovat. V systému jsou 3 role uživatelů: administrátor, specialista a
+    alkoholik. Specialista se stará o alkoholiky (každý alkoholik má svého
+    specialistu). Administrátor může jako jediný spravovat uživatele. Alkoholik
+    je nejčastějším uživatelem, vytváří si schůzky se svým patronem (patronem může
+    být kdokoliv).</dd>
 
-<h4>MeetingController</h4>
-<p>Spravuje schůzky, na kterých se alkoholik setká se svým patronem. Alkoholik
-i patron může vytvořit schůzku, druhý musí schůzku vždy schválit.</p>
+    <dt>CheckController</dt>
+    <dd>Umožňuje specialistům zadávat kontroly alkoholiků.</dd>
 
-<h4>PatronController</h4>
-<p>Spravuje přiřazení patronů alkoholikům. Každý může mít právě jednoho patrona
-a může se starat právě o jednoho alkoholika. Každý alkoholik si může vybrat
-svého patrona, ten pak žádost musí schválit.</p>
+    <dt>MeetingController</dt>
+    <dd>Spravuje schůzky, na kterých se alkoholik setká se svým patronem. Alkoholik
+    i patron může vytvořit schůzku, druhý musí schůzku vždy schválit.</dd>
 
-<h4>UserController</h4>
-<p>Stará se o přihlašování uživatelů do systému.</p>
+    <dt>PatronController</dt>
+    <dd>Spravuje přiřazení patronů alkoholikům. Každý může mít právě jednoho patrona
+    a může se starat právě o jednoho alkoholika. Každý alkoholik si může vybrat
+    svého patrona, ten pak žádost musí schválit.</dd>
+
+    <dt>SessionController</dt>
+    <dd>Umožňuje uživatelům organizovat sezení pro skupinu lidí. Ostatní uživatelé
+    se pak mohou na sezení sami přihlásit.</dd>
+
+    <dt>UserController</dt>
+    <dd>Stará se o přihlašování uživatelů do systému.</dd>
+</dl>
 
 <h3>Views</h3>
 <p>Soubory:<br/>
@@ -92,11 +128,16 @@ svého patrona, ten pak žádost musí schválit.</p>
 <code>resources__views__admin__detail.blade.php</code><br/>
 <code>resources__views__admin__edit.blade.php</code><br/>
 <code>resources__views__admin__index.blade.php</code><br/>
+<code>resources__views__checks__create.blade.php</code><br/>
+<code>resources__views__checks__index.blade.php</code><br/>
 <code>resources__views__meetings__create.blade.php</code><br/>
 <code>resources__views__meetings__detail.blade.php</code><br/>
 <code>resources__views__meetings__index.blade.php</code><br/>
 <code>resources__views__patrons__index.blade.php</code><br/>
 <code>resources__views__patrons__request.blade.php</code><br/>
+<code>resources__views__sessions__create.blade.php</code><br/>
+<code>resources__views__sessions__detail.blade.php</code><br/>
+<code>resources__views__sessions__index.blade.php</code><br/>
 <code>resources__views__users__login.blade.php</code><br/>
 <code>resources__views__main.blade.php</code></p>
 
@@ -110,17 +151,21 @@ target="_blank">laravel.com/docs/4.2/html</a>).</p>
 <p>Soubory:<br/>
 <code>app__Http__Middleware__Admin.php</code><br/>
 <code>app__Http__Middleware__Authenticate.php</code><br/>
-<code>app__Http__Middleware__RedirectIfAuthenticated.php</code></p>
+<code>app__Http__Middleware__RedirectIfAuthenticated.php</code><br/>
+<code>app__Http__Middleware__Specialist.php</code></p>
 
 <p>Middleware představuje funkce, které se volají před voláním funkce z
 kontroléru. V tomto projektu slouží k ověření, zda je uživatel přihlášený a zda
-má roli administrátora. Který middleware se zavolá je určeno v souboru
+má vyžadovanou roli. Který middleware se zavolá je určeno v souboru
 <code>routes__web.php</code></p>
 
 <h3>Database migrations</h3>
 <p>Soubory:<br/>
 <code>database__migrations__2014_10_12_000000_create_users_table.php</code><br/>
-<code>database__migrations__2017_11_27_134756_create_meetings_table.php</code></p>
+<code>database__migrations__2017_11_27_134756_create_meetings_table.php</code><br/>
+<code>database__migrations__2017_12_04_152457_create_checks_table.php</code><br/>
+<code>database__migrations__2017_12_04_163043_create_sessions_table.php</code></p>
+
 
 <p>Framework Laravel nepoužívá čisté SQL pro generování struktury databáze, ale
 tzv. database migrations. V nich je definovaná struktura databáze, která se pak
@@ -183,7 +228,6 @@ sezením jsou nastaveny v souboru <code>config__session.php</code>.</p>
 </ol>
 
 <h2>Známé problémy</h2>
-<p>V aplikaci není implementované zadávání kontrol alkoholiků. Aplikace rovněž
-neumožňuje organizaci skupinových sezení.</p>
+<p>Aplikace neumožňuje, aby alkoholici mohli zadat do systému požití alkoholu.</p>
 
 </body></html>
