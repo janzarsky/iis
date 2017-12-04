@@ -32,7 +32,14 @@ class PatronController extends Controller
             ->select(['u1.id as id', 'u1.name as name'])
             ->get()->first();
 
-        $vals['alcoholics'] = User::where('patron_id', $user_id)
+        $vals['alcoholic'] = User::where('users.patron_id', $user_id)
+            ->where('users.patron_confirmed', true)
+            ->select(['id', 'name'])
+            ->get()->first();
+
+        $vals['patron_requests'] = User::where('patron_id', $user_id)
+            ->where('patron_confirmed', false)
+            ->select(['id', 'name'])
             ->get();
 
         return view('patrons.index', $vals);
@@ -103,89 +110,67 @@ class PatronController extends Controller
     }
 
     public function stop() {
+        $user_id = Auth::user()->id;
 
+        $pat = User::find($user_id);
+
+        if ($pat->is_patron) {
+            $pat->is_patron = false;
+            $pat->save();
+
+            $alc = User::where('patron_id', $user_id)->get()->first();
+
+            if ($alc) {
+                $alc->patron_id = NULL;
+                $alc->patron_confirmed = true;
+                $alc->save();
+
+                request()->session()->flash('alert-success',
+                    'You are not patron anymore');
+            }
+        }
+        else {
+            request()->session()->flash('alert-danger',
+                'You are not patron');
+        }
+
+        return Redirect::route('patrons');
     }
 
     public function accept($id) {
+        $user_id = Auth::user()->id;
 
-    }
+        $pat = User::find($user_id);
 
-    /*
-    public function accept($id)
-    {
-        $meeting = Meeting::find($id);
-        $meeting->confirmed = true;
-        $meeting->update();
+        if (!$pat->is_patron) {
+            $pat->is_patron = true;
+            $pat->save();
 
-        return Redirect::route('meetings');
-    }
+            $alc = User::find($id);
+            $alc->patron_confirmed = true;
+            $alc->save();
 
-    public function detail($id)
-    {
-        $meeting = Meeting::where('meetings.id', $id)
-            ->join('users as u1', 'meetings.user1_id', '=', 'u1.id')
-            ->join('users as u2', 'meetings.user2_id', '=', 'u2.id')
-            ->select(['meetings.*', 'u1.name as name1', 'u2.name as name2'])
-            ->get()->first();
-
-        return view('meetings.detail', ['meeting' => $meeting]);
-    }
-
-    public function delete($id)
-    {
-        $meeting = Meeting::find($id);
-        $meeting->delete();
-
-        return Redirect::route('meetings');
-    }
-
-    public function create()
-    {
-        $user = Auth::user();
-        $available_users = array();
-
-        if ($user->patron_id != 0) {
-            $patron = User::find($user->patron_id);
-            $available_users[$user->patron_id] = $patron->name . ' (my patron)';
-        }
-
-        $users = User::where('patron_id', $user->id)->get();
-
-        foreach ($users as $u) {
-            $available_users[$u->id] = $u->name;
-        }
-
-        return view('meetings.create', ['available_users' => $available_users]);
-    }
-
-    public function create_post()
-    {
-		$rules = array(
-            'location' => 'required',
-            'date' => 'required',
-            'with' => 'required',
-        );
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			return Redirect::route('meetings.create')
-				->withErrors($validator)
-				->withInput(Input::all());
+            request()->session()->flash('alert-success',
+                'Request accepted');
         }
         else {
-            $meeting = new Meeting;
+            request()->session()->flash('alert-danger',
+                'You are already patron');
+        }
 
-            $meeting->location = Input::get('location');
-            $meeting->date = Input::get('date');
-            $meeting->user1_id = Auth::user()->id;
-            $meeting->user2_id = Input::get('with');
-            $meeting->confirmed = false;
-
-            $meeting->save();
-
-            return Redirect::to('meetings');
-		}
+        return Redirect::route('patrons');
     }
-     */
+
+    public function decline($id) {
+        $alc = User::find($id);
+
+        if ($alc) {
+            $alc->patron_id = NULL;
+            $alc->save();
+        }
+
+        request()->session()->flash('alert-success',
+            'Request declined');
+        return Redirect::route('patrons');
+    }
 }

@@ -27,16 +27,23 @@
         {{ $alcoholic->name }}
         <a href="{{ route('patrons.stop') }}"
             class="btn btn-outline-primary">Stop being patron</a>
-    @elseif (isset($patron_requests))
-        @foreach ($patron_requests as $r)
-            {{ $r->name }} (requesting)
-            <a href="{{ route('patrons.accept', ['id' => $r->id]) }}"
-                class="btn btn-outline-primary">Accept request</a>
-            </br>
-        @endforeach
     @else
         None
     @endif
 </p>
+
+@if (isset($patron_requests))
+    @foreach ($patron_requests as $r)
+        <p>
+            {{ $r->name }} (requesting)
+            @if (!isset($alcoholic))
+                <a href="{{ route('patrons.accept', ['id' => $r->id]) }}"
+                    class="btn btn-outline-primary">Accept request</a>
+            @endif
+            <a href="{{ route('patrons.decline', ['id' => $r->id]) }}"
+                class="btn btn-outline-danger">Decline request</a>
+        </p>
+    @endforeach
+@endif
 
 @endsection

@@ -35,8 +35,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/patrons/request', 'PatronController@request_post');
     Route::get('/patrons/stop', ['as' => 'patrons.stop',
         'uses' => 'PatronController@stop']);
-    Route::get('/patrons/accept/{$id}', ['as' => 'patrons.accept',
+    Route::get('/patrons/accept/{id}', ['as' => 'patrons.accept',
         'uses' => 'PatronController@accept']);
+    Route::get('/patrons/decline/{id}', ['as' => 'patrons.decline',
+        'uses' => 'PatronController@decline']);
 
     Route::get('/logout', ['as' => 'logout', 'uses' => 'UserController@logout']);
 });
