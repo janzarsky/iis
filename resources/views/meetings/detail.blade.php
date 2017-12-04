@@ -15,6 +15,6 @@
 <p>
     <a href="{{ route('meetings.delete', ['id' => $meeting->id]) }}"
         class="btn btn-outline-danger">Delete</a>
-    <a href="{{ route('meetins') }}">Back to meetings</a>
+    <a href="{{ route('meetings') }}">Back to meetings</a>
 </p>
 @endsection

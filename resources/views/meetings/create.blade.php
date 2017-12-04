@@ -28,7 +28,7 @@
 
 <div class="form-group">
     {{ Form::submit('Create meeting', ['class' => 'btn btn-primary']) }}
-    <a href="{{ route('meetins') }}">Back to meetings</a>
+    <a href="{{ route('meetings') }}">Back to meetings</a>
 </div>
 
 {{ Form::close() }}
