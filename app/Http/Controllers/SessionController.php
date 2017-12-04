@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SessionController extends Controller
 {
@@ -20,9 +21,9 @@ class SessionController extends Controller
 
         $vals['organizing'] = Session::join('users as u1',
             'sessions.organizer_id', '=', 'u1.id')
+            ->where('organizer_id', $user_id)
             ->select(['sessions.*', 'u1.id as organizer_id',
                 'u1.name as organizer_name'])
-            ->where('organizer_id', $user_id)
             ->get();
 
         $vals['attending'] = Session::join('users as u1',
@@ -36,13 +37,25 @@ class SessionController extends Controller
 
         $vals['other'] = Session::join('users as u1',
             'sessions.organizer_id', '=', 'u1.id')
-            ->leftJoin('users_sessions', 'sessions.id', '=',
-                'users_sessions.session_id')
-            ->select(['sessions.*', 'u1.id as organizer_id',
-                'u1.name as organizer_name'])
-            ->where('users_sessions.user_id', '=', NULL)
+            ->select(['sessions.id as session_id', 'u1.id as organizer_id',
+                'u1.name as organizer_name', 'sessions.*'])
             ->where('sessions.organizer_id', '!=', $user_id)
+            ->whereNotIn('sessions.id', function ($query) use($user_id) {
+                $query->select('session_id')
+                    ->from('users_sessions')
+                    ->where('user_id', $user_id);
+            })
             ->get();
+
+        $counts = UserSession::groupBy('session_id')
+            ->select(['session_id', DB::raw('count(*) as user_count')])
+            ->get();
+
+        $vals['counts'] = [];
+
+        foreach ($counts as $c) {
+            $vals['counts'][$c->session_id] = $c->user_count;
+        }
 
         return view('sessions.index', $vals);
     }

@@ -27,7 +27,7 @@
                 <td>{{ $s->organizer_name }}</td>
                 <td>{{ $s->date }}</td>
                 <td>{{ $s->location }}</td>
-                <td>{{ $s->attendees }}</td>
+                <td>{{ (array_key_exists($s->id, $counts)) ? $counts[$s->id] : 0 }}</td>
                 <td>
                         <a href="{{ route('sessions.detail', ['id' => $s->id]) }}"
                             class="btn btn-outline-primary">Detail</a>
@@ -59,7 +59,7 @@
                 <td>{{ $s->organizer_name }}</td>
                 <td>{{ $s->date }}</td>
                 <td>{{ $s->location }}</td>
-                <td>{{ $s->attendees }}</td>
+                <td>{{ (array_key_exists($s->id, $counts)) ? $counts[$s->id] : 0 }}</td>
                 <td>
                         <a href="{{ route('sessions.detail', ['id' => $s->id]) }}"
                             class="btn btn-outline-primary">Detail</a>
@@ -91,12 +91,12 @@
                 <td>{{ $s->organizer_name }}</td>
                 <td>{{ $s->date }}</td>
                 <td>{{ $s->location }}</td>
-                <td>{{ $s->attendees }}</td>
+                <td>{{ (array_key_exists($s->id, $counts)) ? $counts[$s->id] : 0 }}</td>
                 <td>
                         <a href="{{ route('sessions.detail', ['id' => $s->id]) }}"
                             class="btn btn-outline-primary">Detail</a>
                         <a href="{{ route('sessions.attend', ['id' => $s->id]) }}"
-                            class="btn btn-outline-primary">Attend</a>
+                            class="btn btn-outline-success">Attend</a>
                 </td>
             </tr>
             @endforeach
