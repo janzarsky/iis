@@ -38,6 +38,11 @@
                     <a class="nav-link" href="{{ url('/admin') }}">Users</a>
                 </li>
                 @endif
+                @if (Auth::check() && Auth::user()->is_specialist)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/checks') }}">Checks</a>
+                </li>
+                @endif
                 @if (Auth::check())
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/logout') }}">Logout</a>

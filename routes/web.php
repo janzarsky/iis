@@ -58,6 +58,16 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::post('/admin/create', 'AdminController@create_post');
 });
 
+Route::group(['middleware' => ['auth', 'specialist']], function() {
+    Route::get('/checks', ['as' => 'checks',
+        'uses' => 'CheckController@index']);
+    Route::get('/checks/delete/{id}', ['as' => 'checks.delete',
+        'uses' => 'CheckController@delete']);
+    Route::get('/checks/create', ['as' => 'checks.create',
+        'uses' => 'CheckController@create']);
+    Route::post('/checks/create', 'CheckController@create_post');
+});
+
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/', function() { return redirect('/login'); });
 

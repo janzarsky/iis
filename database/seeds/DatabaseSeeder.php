@@ -2,6 +2,7 @@
 
 use App\User;
 use App\Meeting;
+use App\Check;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -124,5 +125,21 @@ class DatabaseSeeder extends Seeder
         $mtg6->location = 'Some cafe';
         $mtg6->confirmed = true;
         $mtg6->save();
+
+        // Checks
+        $c1 = new Check();
+        $c1->alcoholic_id = 1;
+        $c1->amount = 1;
+        $c1->save();
+
+        $c2 = new Check();
+        $c2->alcoholic_id = 2;
+        $c2->amount = 2;
+        $c2->save();
+
+        $c3 = new Check();
+        $c3->alcoholic_id = 1;
+        $c3->amount = 2;
+        $c3->save();
     }
 }
