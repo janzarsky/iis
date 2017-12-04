@@ -129,15 +129,51 @@ class SessionController extends Controller
 
     public function detail($id)
     {
-        request()->session()->flash('alert-warning',
-            'Not implemented');
-        return Redirect::route('sessions');
+        $vals['session'] = Session::where('sessions.id', $id)
+            ->join('users', 'users.id', '=', 'sessions.organizer_id')
+            ->select(['sessions.*', 'users.name as organizer_name'])
+            ->get()->first();
+
+        if ($vals['session']) {
+            return view('sessions.detail', $vals);
+        }
+        else {
+            request()->session()->flash('alert-danger',
+                'Session does not exist');
+            return Redirect::route('sessions');
+        }
     }
  
     public function delete($id)
     {
-        request()->session()->flash('alert-warning',
-            'Not implemented');
+        $session = Session::find($id);
+
+        if ($session) {
+            $user_id = Auth::user()->id;
+
+            if ($session->organizer_id == $user_id) {
+                $session_users = UserSession::where('session_id', $session->id)
+                    ->get();
+
+                foreach ($session_users as $u) {
+                    $u->delete();
+                }
+
+                $session->delete();
+
+                request()->session()->flash('alert-success',
+                    'Session successfuly removed');
+            }
+            else {
+                request()->session()->flash('alert-danger',
+                    'You are not allowed to remove this session');
+            }
+        }
+        else {
+            request()->session()->flash('alert-danger',
+                'Session does not exist');
+        }
+
         return Redirect::route('sessions');
     }
 }
