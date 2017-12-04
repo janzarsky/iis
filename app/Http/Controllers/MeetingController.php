@@ -69,6 +69,8 @@ class MeetingController extends Controller
         $meeting->confirmed = true;
         $meeting->update();
 
+        request()->session()->flash('alert-success',
+            'Meeting accepted');
         return Redirect::route('meetings');
     }
 
@@ -88,6 +90,8 @@ class MeetingController extends Controller
         $meeting = Meeting::find($id);
         $meeting->delete();
 
+        request()->session()->flash('alert-success',
+            'Meeting deleted');
         return Redirect::route('meetings');
     }
 
@@ -147,6 +151,8 @@ class MeetingController extends Controller
 
             $meeting->save();
 
+            request()->session()->flash('alert-success',
+                'Meeting successfuly created');
             return Redirect::to('meetings');
 		}
     }
