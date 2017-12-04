@@ -14,15 +14,15 @@
 
 <div class="form-group">
     {{ Form::label('date', 'Date') }}
-    {{ Form::text('date', '', ['class' => 'form-control ' .
-        ($errors->has('date') ? 'is-invalid' : '') ]) }}
+    {{ Form::text('date', '', ['class' => 'datepicker form-control ' .
+        ($errors->has('date') ? 'is-invalid' : '')]) }}
     {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
 </div>
 
 <div class="form-group">
     {{ Form::label('with', 'With') }}
     {{ Form::select('with', $available_users, '', ['class' => 'form-control ' .
-        ($errors->has('with') ? 'is-invalid' : '') ]) }}
+        ($errors->has('with') ? 'is-invalid' : '')]) }}
     {!! $errors->first('with', '<div class="invalid-feedback">:message</div>') !!}
 </div>
 

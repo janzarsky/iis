@@ -98,13 +98,24 @@ class MeetingController extends Controller
 
         if ($user->patron_id != 0) {
             $patron = User::find($user->patron_id);
-            $available_users[$user->patron_id] = $patron->name . ' (my patron)';
+
+            if ($patron) {
+                $available_users[$user->patron_id] = $patron->name . ' (my patron)';
+            }
         }
 
         $users = User::where('patron_id', $user->id)->get();
 
-        foreach ($users as $u) {
-            $available_users[$u->id] = $u->name;
+        if ($users) {
+            foreach ($users as $u) {
+                $available_users[$u->id] = $u->name;
+            }
+        }
+
+        if (count($available_users) == 0) {
+            request()->session()->flash('alert-danger',
+                'There are no users to create meeting with');
+            return Redirect::route('meetings');
         }
 
         return view('meetings.create', ['available_users' => $available_users]);
