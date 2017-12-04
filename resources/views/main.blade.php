@@ -27,8 +27,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/meetings') }}">Meetings</a>
                 </li>
-                @endif
-                @if (Auth::check())
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/sessions') }}">Sessions</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/patrons') }}">Patrons</a>
                 </li>

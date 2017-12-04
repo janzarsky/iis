@@ -24,6 +24,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/meetings/delete/{id}', ['as' => 'meetings.delete',
         'uses' => 'MeetingController@delete']);
 
+    Route::get('/sessions', ['as' => 'sessions',
+        'uses' => 'SessionController@index']);
+    Route::get('/sessions/create', ['as' => 'sessions.create',
+        'uses' => 'SessionController@create']);
+    Route::post('/sessions/create', 'SessionController@create_post');
+    Route::get('/sessions/attend/{id}', ['as' => 'sessions.attend',
+        'uses' => 'SessionController@attend']);
+    Route::get('/sessions/cancel/{id}', ['as' => 'sessions.cancel',
+        'uses' => 'SessionController@cancel']);
+    Route::get('/sessions/detail/{id}', ['as' => 'sessions.detail',
+        'uses' => 'SessionController@detail']);
+    Route::get('/sessions/delete/{id}', ['as' => 'sessions.delete',
+        'uses' => 'SessionController@delete']);
+
     Route::get('/patrons', ['as' => 'patrons',
         'uses' => 'PatronController@index']);
     Route::get('/patrons/remove', ['as' => 'patrons.remove',

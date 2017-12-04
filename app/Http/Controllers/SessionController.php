@@ -1,0 +1,130 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\User;
+use App\Session;
+use App\UserSession;
+use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+
+class SessionController extends Controller
+{
+    public function index()
+    {
+        $user_id = Auth::user()->id;
+
+        $vals['organizing'] = Session::join('users as u1',
+            'sessions.organizer_id', '=', 'u1.id')
+            ->select(['sessions.*', 'u1.id as organizer_id',
+                'u1.name as organizer_name'])
+            ->where('organizer_id', $user_id)
+            ->get();
+
+        $vals['attending'] = Session::join('users as u1',
+            'sessions.organizer_id', '=', 'u1.id')
+            ->join('users_sessions', 'sessions.id', '=',
+                'users_sessions.session_id')
+            ->select(['sessions.*', 'u1.id as organizer_id',
+                'u1.name as organizer_name'])
+            ->where('users_sessions.user_id', $user_id)
+            ->get();
+
+        $vals['other'] = Session::join('users as u1',
+            'sessions.organizer_id', '=', 'u1.id')
+            ->leftJoin('users_sessions', 'sessions.id', '=',
+                'users_sessions.session_id')
+            ->select(['sessions.*', 'u1.id as organizer_id',
+                'u1.name as organizer_name'])
+            ->where('users_sessions.user_id', '=', NULL)
+            ->where('sessions.organizer_id', '!=', $user_id)
+            ->get();
+
+        return view('sessions.index', $vals);
+    }
+
+    public function create()
+    {
+        request()->session()->flash('alert-warning',
+            'Not implemented');
+        return Redirect::route('sessions');
+    }
+
+    public function create_post()
+    {
+        request()->session()->flash('alert-warning',
+            'Not implemented');
+        return Redirect::route('sessions');
+    }
+
+    public function attend($id)
+    {
+        $user_id = Auth::user()->id;
+
+        $session = Session::find($id);
+
+        if ($session) {
+            $us = new UserSession;
+            $us->user_id = $user_id;
+            $us->session_id = $session->id;
+            $us->save();
+
+            request()->session()->flash('alert-success',
+                'Successfully signed up for session');
+        }
+        else {
+            request()->session()->flash('alert-warning',
+                'No session found');
+        }
+
+        return Redirect::route('sessions');
+    }
+
+    public function cancel($id)
+    {
+        $user_id = Auth::user()->id;
+
+        $session = Session::find($id);
+
+        if ($session) {
+            $us = UserSession::where('user_id', $user_id)
+                ->where('session_id', $session->id)
+                ->get()->first();
+
+            if ($us) {
+                $us->delete();
+
+                request()->session()->flash('alert-success',
+                    'Successfully signed out of session');
+            }
+            else {
+                request()->session()->flash('alert-warning',
+                    'You do not attend this session');
+            }
+        }
+        else {
+            request()->session()->flash('alert-warning',
+                'No session found');
+        }
+
+        return Redirect::route('sessions');
+    }
+
+    public function detail($id)
+    {
+        request()->session()->flash('alert-warning',
+            'Not implemented');
+        return Redirect::route('sessions');
+    }
+ 
+    public function delete($id)
+    {
+        request()->session()->flash('alert-warning',
+            'Not implemented');
+        return Redirect::route('sessions');
+    }
+}

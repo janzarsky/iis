@@ -3,6 +3,8 @@
 use App\User;
 use App\Meeting;
 use App\Check;
+use App\Session;
+use App\UserSession;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -141,5 +143,30 @@ class DatabaseSeeder extends Seeder
         $c3->alcoholic_id = 1;
         $c3->amount = 2;
         $c3->save();
+
+        // Sessions
+        $s1 = new Session();
+        $s1->organizer_id = 1;
+        $s1->date = '2018-01-02';
+        $s1->location = 'some meeting room';
+        $s1->save();
+
+        $s1 = new Session();
+        $s1->organizer_id = 4;
+        $s1->date = '2018-01-04';
+        $s1->location = 'some meeting room';
+        $s1->save();
+
+        $us1 = new UserSession();
+        $us1->user_id = 1;
+        $us1->session_id = 2;
+        $us1->save();
+
+        $s1 = new Session();
+        $s1->organizer_id = 4;
+        $s1->date = '2018-01-06';
+        $s1->location = 'some meeting room';
+        $s1->save();
+
     }
 }
