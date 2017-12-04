@@ -7,14 +7,14 @@
 
 {{ Form::hidden('id', $user->id) }}
 
-<div class="form-group">
+<div class="form-group required">
     {{ Form::label('name', 'Name') }}
     {{ Form::text('name', $user->name, ['class' => 'form-control ' .
         ($errors->has('name') ? 'is-invalid' : '') ]) }}
     {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
 </div>
 
-<div class="form-group">
+<div class="form-group required">
     {{ Form::label('email', 'Email') }}
     {{ Form::text('email', $user->email, ['class' => 'form-control ' .
         ($errors->has('email') ? 'is-invalid' : '') ]) }}
@@ -31,7 +31,7 @@
     </small>
 </div>
 
-<div class="form-group">
+<div class="form-group required">
     {{ Form::label('role', 'Role') }}
     {{ Form::select('role', ['alcoholic' => 'Alcoholic',
         'specialist' => 'Specialist', 'admin' => 'Admin'], $user->role,

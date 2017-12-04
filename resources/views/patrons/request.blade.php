@@ -5,7 +5,7 @@
 @section('content')
 {{ Form::open(['url' => 'patrons/request']) }}
 
-<div class="form-group">
+<div class="form-group required">
     {{ Form::label('patron_id', 'Patron') }}
     {{ Form::select('patron_id', $options, '',
         ['class' => 'form-control ' .

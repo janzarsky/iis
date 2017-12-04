@@ -5,14 +5,14 @@
 @section('content')
 {{ Form::open(['url' => 'sessions/create']) }}
 
-<div class="form-group">
+<div class="form-group required">
     {{ Form::label('location', 'Location') }}
     {{ Form::text('location', '', ['class' => 'form-control ' .
         ($errors->has('location') ? 'is-invalid' : '') ]) }}
     {!! $errors->first('location', '<div class="invalid-feedback">:message</div>') !!}
 </div>
 
-<div class="form-group">
+<div class="form-group required">
     {{ Form::label('date', 'Date') }}
     {{ Form::text('date', Carbon\Carbon::today()->format('Y-m-d'),
         ['class' => 'datepicker form-control ' .

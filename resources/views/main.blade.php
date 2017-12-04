@@ -8,6 +8,12 @@
 
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}">
+  <style>
+    .form-group.required label:after {
+      content:"*";
+      color:red;
+    }
+  </style>
 </head>
 
 <body>
