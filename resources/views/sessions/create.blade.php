@@ -14,7 +14,8 @@
 
 <div class="form-group">
     {{ Form::label('date', 'Date') }}
-    {{ Form::text('date', '', ['class' => 'datepicker form-control ' .
+    {{ Form::text('date', Carbon\Carbon::today()->format('Y-m-d'),
+        ['class' => 'datepicker form-control ' .
         ($errors->has('date') ? 'is-invalid' : '')]) }}
     {!! $errors->first('date', '<div class="invalid-feedback">:message</div>') !!}
 </div>
